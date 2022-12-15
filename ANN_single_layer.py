@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from scipy.io import arff
 import pandas as pd
 
-data = arff.loadarff(r"D:\36uci\diabetes.arff")
+data = arff.loadarff("diabetes.arff")
 df = pd.DataFrame(data[0])
 
 df.head()
