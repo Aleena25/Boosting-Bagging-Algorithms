@@ -19,6 +19,8 @@ data = arff.loadarff("diabetes.arff")
 df = pd.DataFrame(data[0])
 
 df.head()
+target = df.iloc[:,0:3]
+targetx = pd.get_dummies(target).idxmax(1)
 
 X = np.asarray(df.iloc[:,:-1],dtype = np.float64)
 y1 = df['class']
@@ -27,6 +29,18 @@ y = []
 for i in range(len(y1)):
     y.append(int(y1[i].decode()))
 
+
+
+# generate 2d classification dataset
+n_train = int(0.9 * X.shape[0])
+X, newX = X[:n_train, :], X[n_train:, :]
+y, newy = y[:n_train], y[n_train:]
+trainy = np.asarray(y,dtype = np.float64)
+testy = np.asarray(newy,dtype = np.float64)
+y = np.asarray(y,dtype = np.float64)
+# multiple train-test splits
+n_splits = 10
+scores, members = list(), list()
 
 
 
@@ -43,7 +57,6 @@ oob_score=True,
 random_state=0
 )
 
-    
 bag_model.fit(X, y)
 bag_model.oob_score_
 train_sizes, train_scores, test_scores = learning_curve(bag_model, X, y, 
