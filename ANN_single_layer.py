@@ -13,10 +13,11 @@ data = arff.loadarff("diabetes.arff")
 df = pd.DataFrame(data[0])
 
 df.head()
-
+target = df.iloc[:,-1]
+targetx = pd.get_dummies(target).idxmax(1)
 
 X = np.asarray(df.iloc[:,:-1],dtype = np.float64)
-y1 = df['class']
+y1 = df['Class']
 #y1 = np.asarray(df['class'],dtype = np.float64)
 y = []
 for i in range(len(y1)):
